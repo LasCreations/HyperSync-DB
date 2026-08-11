@@ -1,4 +1,4 @@
-package com.postgresql.centralDB.interfaces;
+package com.postgresql.centralDB.repository;
 
 import com.postgresql.centralDB.model.ecc.Participant;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -2,11 +2,13 @@ package com.postgresql.centralDB.model.ecc;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 @Entity
 @Table(name= "participant")
-
+@Getter @Setter
 
 public class Participant {
     @Id
