@@ -133,6 +133,32 @@ const UpdateParticipant = () => {
                         />
                     </div>
 
+                    <div className="form-group">
+                        <label htmlFor="occupation">Occupation</label>
+                        <input
+                            id="occupation"
+                            type="text"
+                            name="occupation"
+                            placeholder="e.g. Engineer"
+                            value={formData.occupation}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="workplace">Workplace</label>
+                        <input
+                            id="workplace"
+                            type="text"
+                            name="workplace"
+                            placeholder="e.g. Tech Corp"
+                            value={formData.workplace}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
+
                     <div className="form-actions">
                         <button type="button" className="btn-secondary" onClick={() => navigate("/")}>
                             Cancel

@@ -35,22 +35,40 @@ const GetAllParticipants = () => {
     }, []);
 
     const handleDelete = async (id) => {
+
         try {
-            const response = await fetch(`http://192.168.0.67:8080/participants/delete/${id}`, {
+            const response = await fetch(`http://192.168.0.67:8080/registrations/delete/participant/${id}`, {
                 method: "DELETE",
             });
             if (response.ok) {
-                setParticipants(prev => prev.filter(p => String(p.id) !== String(id)));
+                try {
+                    const response = await fetch(`http://192.168.0.67:8080/participants/delete/${id}`, {
+                        method: "DELETE",
+                    });
+                    if (response.ok) {
+                        setParticipants(prev => prev.filter(p => String(p.id) !== String(id)));
+                    } else {
+                        console.error("Failed to delete participant:", response.statusText);
+                    }
+                } catch (error) {
+                    console.error("Error deleting participant:", error);
+                }
             } else {
-                console.error("Failed to delete participant:", response.statusText);
+                console.error("Failed to delete regsitrations linked to participant:", response.statusText);
             }
         } catch (error) {
-            console.error("Error deleting participant:", error);
+            console.error("Error deleting registrations:", error);
         }
+
+
     };
 
     const handleUpdate = (id) => {
         navigate(`/participant/UpdateParticipant/${id}`);
+    }
+
+    const handleRegistration = (id) => {
+        navigate(`/participant/RegisterParticipant/${id}`);
     }
 
     const filteredParticipants = searchQuery.trim() === ""
@@ -69,6 +87,7 @@ const GetAllParticipants = () => {
 
             {/* Search Bar */}
             <div className="search-bar">
+                
                 <select
                     className="search-select"
                     value={searchField}
@@ -133,18 +152,32 @@ const GetAllParticipants = () => {
                                     <td>{participant.email}</td>
                                     <td>{participant.telephone}</td>
                                     <td>
-                                        <Button
-                                            variant="outline-danger"
-                                            onClick={() => handleDelete(participant.id)}
-                                        >
-                                            Delete
-                                        </Button>
-                                        <Button
-                                            variant="outline-secondary"
-                                            onClick={() => handleUpdate(participant.id)}
-                                        >
-                                            Update
-                                        </Button>
+                                        <div className="d-flex gap-2">
+                                            <Button
+                                                variant="outline-success"
+                                                onClick={() => handleRegistration(participant.id)}
+                                            >
+                                                Register
+                                            </Button>
+                                            <Button
+                                                variant="outline-primary"
+                                                onClick={() => handleUpdate(participant.id)}
+                                            >
+                                                View
+                                            </Button>
+                                            <Button
+                                                variant="outline-secondary"
+                                                onClick={() => handleUpdate(participant.id)}
+                                            >
+                                                Update
+                                            </Button>
+                                            <Button
+                                                variant="outline-danger"
+                                                onClick={() => handleDelete(participant.id)}
+                                            >
+                                                Delete
+                                            </Button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
