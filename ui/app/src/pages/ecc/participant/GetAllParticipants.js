@@ -71,6 +71,10 @@ const GetAllParticipants = () => {
         navigate(`/participant/RegisterParticipant/${id}`);
     }
 
+    const handleView = (id) => {
+        navigate(`/participant/ViewParticipant/${id}`);
+    }
+
     const filteredParticipants = searchQuery.trim() === ""
         ? participants
         : participants.filter(p =>
@@ -161,7 +165,7 @@ const GetAllParticipants = () => {
                                             </Button>
                                             <Button
                                                 variant="outline-primary"
-                                                onClick={() => handleUpdate(participant.id)}
+                                                onClick={() => handleView(participant.id)}
                                             >
                                                 View
                                             </Button>

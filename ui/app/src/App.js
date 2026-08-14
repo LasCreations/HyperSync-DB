@@ -7,6 +7,7 @@ import PostParticipant from './pages/ecc/forms/PostParticipant';
 import GetAllParticipants from './pages/ecc/participant/GetAllParticipants';
 import UpdateParticipant from './pages/ecc/participant/UpdateParticipant';
 import Registration from './pages/ecc/registration/Registration';
+import ViewParticipant from './pages/ecc/participant/ViewParticipant';
 import RegisterParticipant from './pages/ecc/participant/RegisterParticipant';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route  path="/registration" element={<Registration />} />
         <Route  path="/participants" element={<GetAllParticipants />} />
         <Route  path="/participant/UpdateParticipant/:id" element={<UpdateParticipant />} />
+        <Route  path="/participant/ViewParticipant/:id" element={<ViewParticipant />} />
         <Route  path="/participant/RegisterParticipant/:id" element={<RegisterParticipant />} />
         <Route  path="*" element={<NotFound />} />
       </Routes>
