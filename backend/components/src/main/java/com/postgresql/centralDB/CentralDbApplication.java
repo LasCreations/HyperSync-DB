@@ -7,7 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CentralDbApplication {
 
 	public static void main(String[] args) {
+
+		
 		SpringApplication.run(CentralDbApplication.class, args);
+
 	}
 
 }

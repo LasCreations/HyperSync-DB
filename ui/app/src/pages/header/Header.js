@@ -18,7 +18,7 @@ const Header = () => {
 
     return (
         <header className="hdr">
-            <Link to="/" className="hdr-brand">⚡ HyperSync DB</Link>
+            <Link to="/" className="hdr-brand">⚡ HFJ</Link>
 
             <nav className="hdr-nav">
                 <div className="hdr-dropdown" ref={dropdownRef}>
