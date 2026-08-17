@@ -47,6 +47,29 @@ const ViewParticipant = () => {
         return `${instructor.first_name || ""} ${instructor.last_name || ""}`.trim();
     };
 
+
+    // useEffect(() => {
+    //     // Fetch the participant data by ID when the component mounts
+    //     const fetchParticipant = async () => {
+    //         try {
+    //             // const response = await fetch(`http://192.168.0.67:8080/participants/fetch/${id}`);
+    //             const response = await fetch(`http://192.168.0.67:8080/certification/fetch/all`);
+                
+    //             if (!response.ok) {
+    //                 throw new Error("Failed to fetch participant data");
+    //             }
+    //             const data = await response.json();
+    //             console.log(data);
+    //             // setFormData(data);
+    //         } catch (error) {
+    //             console.error("Error fetching participant data:", error);
+    //             setError("Failed to load participant data.");
+    //         }
+    //     };
+
+    //     fetchParticipant();
+    // }, [id]);
+
     useEffect(() => {
         // Fetch the participant data by ID when the component mounts
         const fetchParticipant = async () => {

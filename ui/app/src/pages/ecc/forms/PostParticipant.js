@@ -46,52 +46,80 @@ const PostParticipant = () => {
         setError(null);
 
         try {
+            const isoDate = new Date().toISOString().split('T')[0];
+
             // 1. Add Participant
-            const participantResponse = await fetch("http://192.168.0.67:8080/participants/add", {
+            const participantRaw = await fetch("http://192.168.0.67:8080/participants/add", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
             });
 
-            if (!participantResponse.ok) throw new Error("Failed to add participant.");
+            const participantText = await participantRaw.text();
+            console.log("Participant raw response:", participantText);
 
-            const participantData = await participantResponse.json();
-            console.log("Participant added successfully:", participantData);
+            if (!participantRaw.ok) throw new Error(`Failed to add participant: ${participantText}`);
 
+            const participantData = JSON.parse(participantText);
 
+            if (!participantData.id) throw new Error("Participant was created but no 'id' was returned. Check backend response.");
 
-
-            // Build Registration Payload directly (avoid state async delay)
-            const payload = {
-                course_id: formData.course_id,
-                instructor_id: formData.instructor_id,
-                participant_id: participantData.id, // Ensure this matches your DB key (e.g. participantData.id)
-                registration_date: time.toLocaleDateString() // Format as YYYY-MM-DD
+            // 2. Add Registration
+            const registrationPayload = {
+                course_id: Number(formData.course_id),
+                instructor_id: Number(formData.instructor_id),
+                participant_id: participantData.id,
+                registration_date: isoDate
             };
+            console.log("STEP 2 - registrationPayload:", registrationPayload);
 
-            //Add Registration
-            const registrationResponse = await fetch("http://192.168.0.67:8080/registrations/add", {
+            const registrationRaw = await fetch("http://192.168.0.67:8080/registrations/add", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(registrationPayload)
             });
 
-            if (!registrationResponse.ok) throw new Error("Failed to add registration.");
+            const registrationText = await registrationRaw.text();
+            console.log( registrationRaw.status);
+            console.log( registrationText);
 
-            const registrationData = await registrationResponse.json();
-            console.log("Registration added successfully:", registrationData);
+            if (!registrationRaw.ok) throw new Error(`Failed to add registration: ${registrationText}`);
 
-            //Navigate after BOTH requests succeed
+            const registrationData = JSON.parse(registrationText);
+            console.log("STEP 2 - registrationData.id:", registrationData.id);
+
+            if (!registrationData.id) throw new Error("Registration was created but no 'id' was returned. Check backend response.");
+
+            // 3. Add Certification
+            const certPayload = {
+                registration_id: registrationData.id,
+                participant_id: participantData.id,
+                issue_date: isoDate
+            };
+            console.log("STEP 3 - certPayload:", certPayload);
+
+            const certificationRaw = await fetch("http://192.168.0.67:8080/certification/add", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(certPayload)
+            });
+
+            const certificationText = await certificationRaw.text();
+            console.log(certificationRaw.status);
+            console.log(certificationText);
+
+            if (!certificationRaw.ok) throw new Error(`Failed to add certification: ${certificationText}`);
+
+            console.log("All steps succeeded.");
             navigate("/participants");
 
         } catch (err) {
             console.error("Error during submission:", err);
-            setError(err.message || "Something went wrong. Please try again.");
+            setError(err.message || "Something went wrong.");
         } finally {
             setLoading(false);
         }
     };
-
     return (
         <div className="form-container">
             <div className="form-card">
