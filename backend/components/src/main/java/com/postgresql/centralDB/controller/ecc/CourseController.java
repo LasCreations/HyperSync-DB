@@ -19,6 +19,10 @@ public class CourseController{
     @Autowired
     private CourseRepo courseRepo;
 
+
+    
+
+
     //Get all data from table
     @GetMapping("/courses/fetch/all")
     public List<Course> getAll(){

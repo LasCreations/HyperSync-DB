@@ -1,16 +1,18 @@
 package com.postgresql.centralDB.model.ecc;
 
-
-import jakarta.persistence.*;
-import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Data;
 
 @Data
 @Entity
-@Table(name= "certification")
-
-
-
+@Table(name = "certification")
 
 public class Certification {
 
@@ -22,18 +24,20 @@ public class Certification {
     @Column(name = "participant_id")
     private Long participantId;
 
-    @Column(name = "course_id")
-    private Long course_id;
-    
+    @JsonProperty("registration_id")
+    @Column(name = "registration_id")
+    private Long registration_id;
+
+    @JsonProperty("issue_date")
     @Column(name = "issue_date")
     private String issue_date;
 
-    @Column(name = "expiration_date")
+    @JsonProperty("expiration_date")
+    @Column(name = "expiration_date", insertable = false, updatable = false)
     private String expiration_date;
 
-    @Column (name = "status")
-    private Boolean status;
-
-
+    @JsonProperty("status")
+    @Column(name = "status", insertable = false, updatable = false)
+    private String status;
 
 }

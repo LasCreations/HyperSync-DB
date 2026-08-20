@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @CrossOrigin("*")
 
+
 public class RegistrationController {
 
     @Autowired
@@ -45,4 +46,5 @@ public class RegistrationController {
         List<Registration> registrations = registrationRepo.findByParticipantId(participant_id);
         return ResponseEntity.ok(registrations);
     }
+
 }
