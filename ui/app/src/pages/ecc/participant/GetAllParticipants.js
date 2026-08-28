@@ -36,29 +36,46 @@ const GetAllParticipants = () => {
 
     const handleDelete = async (id) => {
 
+
         try {
-            const response = await fetch(`http://192.168.0.67:8080/registrations/delete/participant/${id}`, {
+            const response = await fetch(`http://192.168.0.67:8080/certifications/delete/participant/${id}`, {
                 method: "DELETE",
             });
             if (response.ok) {
                 try {
-                    const response = await fetch(`http://192.168.0.67:8080/participants/delete/${id}`, {
+                    const response = await fetch(`http://192.168.0.67:8080/registrations/delete/participant/${id}`, {
                         method: "DELETE",
                     });
                     if (response.ok) {
-                        setParticipants(prev => prev.filter(p => String(p.id) !== String(id)));
-                    } else {
-                        console.error("Failed to delete participant:", response.statusText);
+                        try {
+                            const response = await fetch(`http://192.168.0.67:8080/participants/delete/${id}`, {
+                                method: "DELETE",
+                            });
+                            if (response.ok) {
+                                setParticipants(prev => prev.filter(p => String(p.id) !== String(id)));
+                            } else {
+                                console.error("Failed to delete participant:", response.statusText);
+                            }
+                        } catch (error) {
+                            console.error("Error deleting participant:", error);
+                        }
+                    }
+                    else {
+                        console.error("Failed to delete regsitrations linked to participant:", response.statusText);
                     }
                 } catch (error) {
-                    console.error("Error deleting participant:", error);
+                    console.error("Error deleting registrations:", error);
                 }
             } else {
                 console.error("Failed to delete regsitrations linked to participant:", response.statusText);
             }
+
         } catch (error) {
             console.error("Error deleting registrations:", error);
         }
+
+
+
 
 
     };
@@ -91,7 +108,7 @@ const GetAllParticipants = () => {
 
             {/* Search Bar */}
             <div className="search-bar">
-                
+
                 <select
                     className="search-select"
                     value={searchField}

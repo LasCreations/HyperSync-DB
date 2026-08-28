@@ -29,6 +29,7 @@ const Header = () => {
                         <div className="hdr-dropdown-menu">
                             <Link to="/registration" className="hdr-dropdown-item" onClick={() => setEccOpen(false)}>Registration</Link>
                             <Link to="/participants" className="hdr-dropdown-item" onClick={() => setEccOpen(false)}>Participants</Link>
+                            <Link to="/submissions" className="hdr-dropdown-item" onClick={() => setEccOpen(false)}>Google Form Submissions</Link>
                             <Link to="/upload" className="hdr-dropdown-item" onClick={() => setEccOpen(false)}>Upload</Link>
                             <hr className="hdr-divider" />
                             <Link to="/delete" className="hdr-dropdown-item hdr-danger" onClick={() => setEccOpen(false)}>Delete</Link>
@@ -37,6 +38,7 @@ const Header = () => {
                 </div>
                 <Link to="/sponsors" className="hdr-btn">Sponsors</Link>
                 <Link to="/events" className="hdr-btn">Events</Link>
+                <Link to="/reports" className="hdr-btn">Reports</Link>
             </nav>
         </header>
     );

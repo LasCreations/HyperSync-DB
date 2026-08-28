@@ -9,6 +9,8 @@ import UpdateParticipant from './pages/ecc/participant/UpdateParticipant';
 import Registration from './pages/ecc/registration/Registration';
 import ViewParticipant from './pages/ecc/participant/ViewParticipant';
 import RegisterParticipant from './pages/ecc/participant/RegisterParticipant';
+import ExpiringReportGenerator from './pages/report/ExpiringReportGenerator';
+import GetSubmissions from './pages/ecc/submissions/GetSubmissions';
 
 function App() {
 
@@ -18,7 +20,9 @@ function App() {
       <Routes>
         <Route  path="/" element={<Dashboard />} />
         <Route  path="/registration" element={<Registration />} />
+        <Route  path="/reports" element={<ExpiringReportGenerator />} />
         <Route  path="/participants" element={<GetAllParticipants />} />
+        <Route  path="/submissions" element={<GetSubmissions />} />
         <Route  path="/participant/UpdateParticipant/:id" element={<UpdateParticipant />} />
         <Route  path="/participant/ViewParticipant/:id" element={<ViewParticipant />} />
         <Route  path="/participant/RegisterParticipant/:id" element={<RegisterParticipant />} />

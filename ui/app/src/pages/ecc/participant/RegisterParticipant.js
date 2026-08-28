@@ -56,6 +56,29 @@ const RegisterParticipant = () => {
             const registrationData = await registrationResponse.json();
             console.log("Registration added successfully:", registrationData);
 
+            // 3. Add Certification
+            const isoDate = new Date().toISOString().split('T')[0];
+            const certPayload = {
+                registration_id: registrationData.id,
+                participant_id: id,
+                issue_date: isoDate
+            };
+            console.log("STEP 3 - certPayload:", certPayload);
+
+            const certificationRaw = await fetch("http://192.168.0.67:8080/certification/add", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(certPayload)
+            });
+
+            const certificationText = await certificationRaw.text();
+            console.log(certificationRaw.status);
+            console.log(certificationText);
+
+            if (!certificationRaw.ok) throw new Error(`Failed to add certification: ${certificationText}`);
+
+            console.log("All steps succeeded.");
+
             //Navigate after BOTH requests succeed
             navigate("/participants");
 
