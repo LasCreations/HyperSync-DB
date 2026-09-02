@@ -54,8 +54,8 @@ const ExpiringReportGenerator = () => {
                 "First Name": item.firstName,
                 "Last Name": item.lastName,
                 "Email": item.email,
-                "Expiration Date": item.expirationDate,
-                "Course Name": item.CourseName
+                "Expiration Date":item.CourseName,
+                "Course Name":  item.expirationDate
             }));
 
             // Execute download helper

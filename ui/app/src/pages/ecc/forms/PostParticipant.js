@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./PostParticipant.css";
-import GetAllCourses from "../course/GetAllCourses";
-import GetAllInstructors from "../instructor/GetAllInstructors";
+import GetAllCourses from "../services/courses/GetAllCourses";
+import GetAllInstructors from "../services/instructors/GetAllInstructors";
 import { useEffect } from "react";
 
 const PostParticipant = () => {
@@ -21,7 +21,7 @@ const PostParticipant = () => {
     const { courses, loading: coursesLoading, error: coursesError } = GetAllCourses();
     const { instructors, loading: instructorsLoading, error: instructorsError } = GetAllInstructors();
 
-    const [courseSelectedId, setCourseSelectedId] = useState("");
+
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);

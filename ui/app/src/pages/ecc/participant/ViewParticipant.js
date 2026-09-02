@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import "./ViewParticipant.css";
-import GetAllInstructors from "../instructor/GetAllInstructors";
-import GetAllCourses from "../course/GetAllCourses";
+import GetAllCourses from "../services/courses/GetAllCourses";
+import GetAllInstructors from "../services/instructors/GetAllInstructors";
 
 const ViewParticipant = () => {
     const { id } = useParams();

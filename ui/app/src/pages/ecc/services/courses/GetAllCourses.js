@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
 const GetAllCourses = () => {
-    const navigate = useNavigate();
-
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

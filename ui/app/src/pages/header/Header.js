@@ -27,12 +27,12 @@ const Header = () => {
                     </button>
                     {eccOpen && (
                         <div className="hdr-dropdown-menu">
-                            <Link to="/registration" className="hdr-dropdown-item" onClick={() => setEccOpen(false)}>Registration</Link>
+                            {/* <Link to="/registration" className="hdr-dropdown-item" onClick={() => setEccOpen(false)}>Registration</Link> */}
                             <Link to="/participants" className="hdr-dropdown-item" onClick={() => setEccOpen(false)}>Participants</Link>
                             <Link to="/submissions" className="hdr-dropdown-item" onClick={() => setEccOpen(false)}>Google Form Submissions</Link>
-                            <Link to="/upload" className="hdr-dropdown-item" onClick={() => setEccOpen(false)}>Upload</Link>
-                            <hr className="hdr-divider" />
-                            <Link to="/delete" className="hdr-dropdown-item hdr-danger" onClick={() => setEccOpen(false)}>Delete</Link>
+                            {/* <Link to="/upload" className="hdr-dropdown-item" onClick={() => setEccOpen(false)}>Upload</Link> */}
+                            {/* <hr className="hdr-divider" /> */}
+                            {/* <Link to="/delete" className="hdr-dropdown-item hdr-danger" onClick={() => setEccOpen(false)}>Delete</Link> */}
                         </div>
                     )}
                 </div>

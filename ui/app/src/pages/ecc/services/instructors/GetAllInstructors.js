@@ -1,11 +1,10 @@
 
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import  { useState, useEffect } from 'react';
 
 
 const GetAllInstructors = () => {
 
-    const navigate = useNavigate();
+
     
         const [instructors, setInstructors] = useState([]);
         const [loading, setLoading] = useState(true);

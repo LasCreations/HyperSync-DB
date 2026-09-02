@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom"; // Added for navigate
 import "./RegisterParticipant.css";
 import { useParams } from "react-router-dom"; // Added to get the participant ID from the URL
 import { useEffect } from "react"; // Added to fetch participant data on mount
-import GetAllCourses from "../course/GetAllCourses";
-import GetAllInstructors from "../instructor/GetAllInstructors";
+import GetAllCourses from "../services/courses/GetAllCourses";
+import GetAllInstructors from "../services/instructors/GetAllInstructors";
 
 
 const RegisterParticipant = () => {
@@ -30,7 +30,6 @@ const RegisterParticipant = () => {
     const { courses, loading: coursesLoading, error: coursesError } = GetAllCourses();
     const { instructors, loading: instructorsLoading, error: instructorsError } = GetAllInstructors();
 
-    const [courseSelectedId, setCourseSelectedId] = useState("");
 
 
     const handleInputChange = (e) => {
@@ -43,7 +42,7 @@ const RegisterParticipant = () => {
         setLoading(true);
         setError(null);
 
-         try {
+        try {
             
             const registrationResponse = await fetch("http://192.168.0.67:8080/registrations/add", {
                 method: "POST",
