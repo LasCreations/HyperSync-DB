@@ -25,61 +25,61 @@ const GetSubmissions = () => {
     const daysInMonth = new Date(year, month, 0).getDate();
 
     // Fetch participant details when a row is selected (before modal opens)
-   const handleRowSelect = async (row) => {
-    setSelectedRow(row);
-    setParticipantData(null);
-    setFetchError(null);
+    const handleRowSelect = async (row) => {
+        setSelectedRow(row);
+        setParticipantData(null);
+        setFetchError(null);
 
-    // 1. Resolve courseId and instructorId FIRST so they are available to both try and catch
-    let courseId = null;
-    let instructorId = null;
+        // 1. Resolve courseId and instructorId FIRST so they are available to both try and catch
+        let courseId = null;
+        let instructorId = null;
 
-    if (courses) {
-        const matchedCourse = courses.find(course => course.course_name === row["Course Name"]);
-        courseId = matchedCourse ? matchedCourse.id : null;
-    }
+        if (courses) {
+            const matchedCourse = courses.find(course => course.course_name === row["Course Name"]);
+            courseId = matchedCourse ? matchedCourse.id : null;
+        }
 
-    if (instructors) {
-        const matchedInstructor = instructors.find(instructor => {
-            const fullName = `${instructor.first_name} ${instructor.last_name}`.trim();
-            return fullName.toLowerCase() === row["Instructor"]?.toString().trim().toLowerCase();
-        });
-        instructorId = matchedInstructor ? matchedInstructor.id : null;
-    }
+        if (instructors) {
+            const matchedInstructor = instructors.find(instructor => {
+                const fullName = `${instructor.first_name} ${instructor.last_name}`.trim();
+                return fullName.toLowerCase() === row["Instructor"]?.toString().trim().toLowerCase();
+            });
+            instructorId = matchedInstructor ? matchedInstructor.id : null;
+        }
 
-    // Helper function to close modal on success
-    const closeModal = () => {
-        const modalElement = document.getElementById("exampleModalCenter");
-        if (window.bootstrap) {
-            const modalInstance = window.bootstrap.Modal.getInstance(modalElement) 
-                || new window.bootstrap.Modal(modalElement);
-            modalInstance.hide();
-        } else {
-            const closeBtn = modalElement?.querySelector('[data-bs-dismiss="modal"]');
-            if (closeBtn) closeBtn.click();
+        // Helper function to close modal on success
+        const closeModal = () => {
+            const modalElement = document.getElementById("exampleModalCenter");
+            if (window.bootstrap) {
+                const modalInstance = window.bootstrap.Modal.getInstance(modalElement)
+                    || new window.bootstrap.Modal(modalElement);
+                modalInstance.hide();
+            } else {
+                const closeBtn = modalElement?.querySelector('[data-bs-dismiss="modal"]');
+                if (closeBtn) closeBtn.click();
+            }
+        };
+
+        // 2. Attempt fetching the existing participant
+        try {
+            const data = await fetchParticipantByEmail(row["Email"]);
+            console.log("Participant found:", data);
+            setParticipantData(data);
+
+            // Existing participant post
+            const isSuccess = await postExistingParticipant(data, row, courseId, instructorId);
+            if (isSuccess) closeModal();
+
+        } catch (error) {
+            console.error("Fetch failed:", error);
+            setFetchError("No user found for the provided email.");
+
+            // New participant post (courseId and instructorId are now populated correctly)
+            // Pass null or row details for participant data since 'data' failed to fetch
+            const isSuccess = await postNewParticipant(null, row, courseId, instructorId);
+            if (isSuccess) closeModal();
         }
     };
-
-    // 2. Attempt fetching the existing participant
-    try {
-        const data = await fetchParticipantByEmail(row["Email"]);
-        console.log("Participant found:", data);
-        setParticipantData(data);
-
-        // Existing participant post
-        const isSuccess = await postExistingParticipant(data, row, courseId, instructorId);
-        if (isSuccess) closeModal();
-
-    } catch (error) {
-        console.error("Fetch failed:", error);
-        setFetchError("No user found for the provided email.");
-
-        // New participant post (courseId and instructorId are now populated correctly)
-        // Pass null or row details for participant data since 'data' failed to fetch
-        const isSuccess = await postNewParticipant(null, row, courseId, instructorId);
-        if (isSuccess) closeModal();
-    }
-};
 
     const handleModalSubmit = async () => {
         if (!selectedRow) return;
